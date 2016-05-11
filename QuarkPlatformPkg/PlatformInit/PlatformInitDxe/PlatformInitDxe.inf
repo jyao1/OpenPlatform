@@ -1,0 +1,82 @@
+## @file
+# Component description file for Quark Platform Init DXE module.
+#
+# Copyright (c) 2013 Intel Corporation.
+#
+# This program and the accompanying materials
+# are licensed and made available under the terms and conditions of the BSD License
+# which accompanies this distribution.  The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php
+#
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PlatformInitDxe
+  FILE_GUID                      = 2E6A521C-F697-402d-9774-98B2B7E140F3
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = PlatformInit
+  ENTRY_POINT                    = SaveMemoryConfigEntryPoint
+  ENTRY_POINT                    = DxePlatformDriverEntry
+
+[Sources]
+  PlatformInitDxe.h
+  PlatformInitDxe.c
+  PlatformConfig.c
+  SaveMemoryConfig.c
+  QNCRegTable.c
+  SetupPlatform.c
+  SetupPlatform.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  QuarkSocPkg/QuarkSocPkg.dec
+  QuarkPlatformPkg/QuarkPlatformPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  HobLib
+  DebugLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DxeServicesTableLib
+  UefiLib
+  PlatformHelperLib
+  PlatformPcieHelperLib
+  DxeServicesLib
+  IntelQNCLib
+  QNCAccessLib
+  BaseMemoryLib
+  I2cLib
+  S3IoLib
+  S3PciLib
+
+[Protocols]
+  gEfiFirmwareVolumeBlockProtocolGuid
+  gEfiCpuArchProtocolGuid
+  gEfiSmmConfigurationProtocolGuid
+  gEfiSmmSpiReadyProtocolGuid
+  gEfiVariableWriteArchProtocolGuid
+  gEfiPlatformPolicyProtocolGuid                # PROTOCOL ALWAYS_PRODUCED
+  
+[Guids]
+  gEfiGenericVariableGuid
+  gEfiMemoryConfigDataGuid
+
+[Pcd]
+  gEfiQuarkNcSocIdTokenSpaceGuid.PcdRcbaMmioBaseAddress
+  gEfiQuarkNcSocIdTokenSpaceGuid.PcdQuarkAgent0IR
+  gEfiQuarkNcSocIdTokenSpaceGuid.PcdQuarkAgent1IR
+  gEfiQuarkNcSocIdTokenSpaceGuid.PcdQuarkAgent2IR
+  gEfiQuarkNcSocIdTokenSpaceGuid.PcdQuarkAgent3IR
+
+[Depex]
+  TRUE
+
