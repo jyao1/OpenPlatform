@@ -306,8 +306,10 @@ FvNameGuid         = 18D6D9F4-2EEF-4913-AEE6-BE61C6DA6CC8
 APRIORI PEI {
   INF  MdeModulePkg/Universal/PCD/Pei/Pcd.inf
   INF  MdeModulePkg/Universal/PcatSingleSegmentPciCfg2Pei/PcatSingleSegmentPciCfg2Pei.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
   INF  MdeModulePkg/Universal/ReportStatusCodeRouter/Pei/ReportStatusCodeRouterPei.inf
   INF  MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf
+!endif
 }
 
 ##
@@ -325,15 +327,21 @@ FILE FREEFORM = PCD(gEfiQuarkNcSocIdTokenSpaceGuid.PcdQuarkMicrocodeFile) {
 }
 
 INF  RuleOverride = NORELOC  MdeModulePkg/Universal/PCD/Pei/Pcd.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  RuleOverride = NORELOC  MdeModulePkg/Universal/ReportStatusCodeRouter/Pei/ReportStatusCodeRouterPei.inf
 INF  RuleOverride = NORELOC  MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf
+!endif
 INF  RuleOverride = NORELOC  MdeModulePkg/Universal/FaultTolerantWritePei/FaultTolerantWritePei.inf
 INF  RuleOverride = NORELOC  MdeModulePkg/Universal/Variable/Pei/VariablePei.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  RuleOverride = NORELOC  UefiCpuPkg/CpuMpPei/CpuMpPei.inf
 INF  RuleOverride = NORELOC  MdeModulePkg/Universal/CapsulePei/CapsulePei.inf
+!endif
 INF  RuleOverride = NORELOC  QuarkSocPkg/QuarkNorthCluster/MemoryInit/Pei/MemoryInitPei.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  RuleOverride = NORELOC  QuarkSocPkg/QuarkNorthCluster/Smm/Pei/SmmAccessPei/SmmAccessPei.inf
 INF  RuleOverride = NORELOC  QuarkSocPkg/QuarkNorthCluster/Smm/Pei/SmmControlPei/SmmControlPei.inf
+!endif
 #!if $(GALILEO) == GEN1
 INF  QuarkPlatformPkg/Board/Galileo/BoardEarlyInit/BoardEarlyInit.inf
 #!endif
@@ -343,20 +351,25 @@ INF  QuarkPlatformPkg/Board/GalileoGen2/BoardEarlyInit/BoardEarlyInit.inf
 INF  QuarkPlatformPkg/PlatformInit/PlatformInitPei/PlatformEarlyInit.inf
 INF  MdeModulePkg/Universal/PcatSingleSegmentPciCfg2Pei/PcatSingleSegmentPciCfg2Pei.inf
 INF  MdeModulePkg/Core/DxeIplPeim/DxeIpl.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  UefiCpuPkg/PiSmmCommunication/PiSmmCommunicationPei.inf
 INF  UefiCpuPkg/Universal/Acpi/S3Resume2Pei/S3Resume2Pei.inf
+!endif
 !if $(MEASURED_BOOT_ENABLE)
 INF  SecurityPkg/Tcg/TrEEConfig/TrEEConfigPei.inf
 INF  SecurityPkg/Tcg/TcgPei/TcgPei.inf
 !endif
 
+!if $(BOOT_SHELL_ONLY) == FALSE
 FILE FV_IMAGE = 1E9D7604-EF45-46a0-BD8A-71AC78C17AC1 {
   SECTION PEI_DEPEX_EXP = {gEfiPeiMemoryDiscoveredPpiGuid AND gEfiPeiBootInRecoveryModePpiGuid}
   SECTION GUIDED A31280AD-481E-41B6-95E8-127F4C984779 {    # TIANO COMPRESS GUID
     SECTION FV_IMAGE = FVRECOVERY_COMPONENTS
   }
 }
+!endif
 
+!if $(BOOT_SHELL_ONLY) == FALSE
 ################################################################################
 #
 # FV Section
@@ -393,6 +406,7 @@ INF  MdeModulePkg/Bus/Usb/UsbBusPei/UsbBusPei.inf
 INF  MdeModulePkg/Bus/Usb/UsbBotPei/UsbBotPei.inf
 INF  FatPkg/FatPei/FatPei.inf
 INF  MdeModulePkg/Universal/Disk/CdExpressPei/CdExpressPei.inf
+!endif
 
 ################################################################################
 #
@@ -449,23 +463,29 @@ INF  QuarkPlatformPkg/Board/GalileoGen2/BoardInit/BoardInitDxe.inf
 #  EDK Core modules
 ##
 INF  UefiCpuPkg/CpuIo2Dxe/CpuIo2Dxe.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
 INF  MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
 INF  MdeModulePkg/Universal/ReportStatusCodeRouter/Smm/ReportStatusCodeRouterSmm.inf
 INF  MdeModulePkg/Universal/StatusCodeHandler/Smm/StatusCodeHandlerSmm.inf
 INF  MdeModulePkg/Universal/SectionExtractionDxe/SectionExtractionDxe.inf
+!endif
 
 INF  MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf
 INF  UefiCpuPkg/CpuDxe/CpuDxe.inf
 INF  MdeModulePkg/Universal/Metronome/Metronome.inf
 INF  MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 INF  MdeModulePkg/Core/RuntimeDxe/RuntimeDxe.inf
+!if $(BOOT_SHELL_ONLY)
+INF  MdeModulePkg/Universal/Variable/EmuRuntimeDxe/EmuVariableRuntimeDxe.inf
+!else
 INF  MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteSmm.inf
 !if $(SECURE_BOOT_ENABLE)
   INF  SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !endif
 INF  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf
 INF  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmm.inf
+!endif
 INF  MdeModulePkg/Universal/CapsuleRuntimeDxe/CapsuleRuntimeDxe.inf
 INF  MdeModulePkg/Universal/MonotonicCounterRuntimeDxe/MonotonicCounterRuntimeDxe.inf
 INF  MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
@@ -477,20 +497,26 @@ INF  MdeModulePkg/Universal/MemoryTest/NullMemoryTestDxe/NullMemoryTestDxe.inf
 # Platform
 #
 INF  MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  MdeModulePkg/Application/UiApp/UiApp.inf
+!endif
 
-# BUGBUG: Open source version does not work
 #INF  MdeModulePkg/Bus/Pci/PciHostBridgeDxe/PciHostBridgeDxe.inf
 INF  QuarkPlatformPkg/Override/MdeModulePkg/Bus/Pci/PciHostBridge/PciHostBridge.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  QuarkPlatformPkg/Flash/SpiFvbServices/PlatformSpi.inf
 INF  QuarkPlatformPkg/Flash/SpiFvbServices/PlatformSmmSpi.inf
+!endif
 INF  QuarkSocPkg/QuarkNorthCluster/QNCInit/Dxe/QNCInitDxe.inf
 INF  PcAtChipsetPkg/HpetTimerDxe/HpetTimerDxe.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  QuarkSocPkg/QuarkNorthCluster/Smm/Dxe/SmmAccessDxe/SmmAccess.inf
 INF  QuarkSocPkg/QuarkNorthCluster/S3Support/Dxe/QncS3Support.inf
 INF  QuarkSocPkg/QuarkNorthCluster/Spi/PchSpiRuntime.inf
 INF  QuarkSocPkg/QuarkNorthCluster/Spi/PchSpiSmm.inf
+!endif
 
+!if $(BOOT_SHELL_ONLY) == FALSE
 #
 # ACPI
 #
@@ -505,7 +531,9 @@ INF  RuleOverride = DRIVER_ACPITABLE QuarkPlatformPkg/Board/Galileo/AcpiTables/A
 #!if $(GALILEO) == GEN2
 INF  RuleOverride = DRIVER_ACPITABLE QuarkPlatformPkg/Board/GalileoGen2/AcpiTables/AcpiBoard.inf
 #!endif
+!endif
 
+!if $(BOOT_SHELL_ONLY) == FALSE
 #
 # SMM
 #
@@ -520,13 +548,16 @@ INF  QuarkPlatformPkg/Feature/PowerManagement/SleepSmm/SleepSmmPlatform.inf
 INF  QuarkPlatformPkg/Feature/PowerManagement/CpuPowerManagement/SmmPowerManagement.inf
 INF  MdeModulePkg/Universal/LockBox/SmmLockBox/SmmLockBox.inf
 INF  UefiCpuPkg/PiSmmCommunication/PiSmmCommunicationSmm.inf
+!endif
 
+!if $(BOOT_SHELL_ONLY) == FALSE
 #
 # SMBIOS
 #
 INF   MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
 INF  QuarkPlatformPkg/Feature/Smbios/SmbiosMiscDxe/SmbiosMiscDxe.inf
 INF  QuarkPlatformPkg/Feature/Smbios/MemorySubClass/MemorySubClass.inf
+!endif
 
 #
 # PCI
@@ -539,6 +570,7 @@ INF  QuarkSocPkg/QuarkSouthCluster/IohInit/Dxe/IohInitDxe.inf
 INF  MdeModulePkg/Bus/Pci/PciSioSerialDxe/PciSioSerialDxe.inf
 !endif
 
+!if $(BOOT_SHELL_ONLY) == FALSE
 #
 # USB
 #
@@ -551,7 +583,9 @@ INF  MdeModulePkg/Bus/Usb/UsbKbDxe/UsbKbDxe.inf
 INF  MdeModulePkg/Bus/Usb/UsbMouseDxe/UsbMouseDxe.inf
 INF  MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
 !endif
+!endif
 
+!if $(BOOT_SHELL_ONLY) == FALSE
 #
 # SDIO
 #
@@ -559,6 +593,7 @@ INF  MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
 !else
 INF  QuarkSocPkg/QuarkSouthCluster/Sdio/Dxe/SDControllerDxe/SDControllerDxe.inf
 INF  QuarkSocPkg/QuarkSouthCluster/Sdio/Dxe/SDMediaDeviceDxe/SDMediaDeviceDxe.inf
+!endif
 !endif
 
 #
@@ -570,14 +605,16 @@ INF  MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
 
 INF  MdeModulePkg/Universal/HiiDatabaseDxe/HiiDatabaseDxe.inf
 INF  MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
 INF  QuarkPlatformPkg/Override/MdeModulePkg/Universal/KeyboardLayout/KeyboardLayoutDxe.inf
+!endif
 INF  MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
 INF  MdeModulePkg/Universal/Disk/UnicodeCollation/EnglishDxe/EnglishDxe.inf
 
 #
 # File System Modules
 #
-!if $(PERFORMANCE_ENABLE)
+!if $(PERFORMANCE_ENABLE) || $(BOOT_SHELL_ONLY)
 INF  MdeModulePkg/Universal/FvSimpleFileSystemDxe/FvSimpleFileSystemDxe.inf
 !else
 INF  MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
@@ -660,9 +697,9 @@ READ_LOCK_STATUS   = TRUE
 #
 # Shell and Applications
 #
-INF  RuleOverride = TIANOCOMPRESSED ShellPkg/Application/Shell/Shell.inf
+INF  ShellPkg/Application/Shell/Shell.inf
 !if $(PERFORMANCE_ENABLE)
-INF  RuleOverride = TIANOCOMPRESSED PerformancePkg/Dp_App/Dp.inf
+INF  PerformancePkg/Dp_App/Dp.inf
 !endif
 
 ################################################################################

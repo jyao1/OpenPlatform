@@ -105,6 +105,8 @@
   gEfiQuarkSCSocIdTokenSpaceGuid.PcdIohEthernetMac1
   gQuarkPlatformTokenSpaceGuid.PcdBoardInitPreMem
   gQuarkPlatformTokenSpaceGuid.PcdBoardInitPostMem
+  gQuarkPlatformTokenSpaceGuid.PcdPciExpPerstResumeWellGpio
+  gQuarkPlatformTokenSpaceGuid.PcdFlashUpdateLedResumeWellGpio
 
 [Depex]
   gEfiPeiReadOnlyVariable2PpiGuid AND gQNCMemoryInitPpiGuid

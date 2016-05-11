@@ -32,9 +32,6 @@ WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 #include <Galileo/Include/BoardGalileo.h>
 #include <Library/PlatformHelperLib.h>
 
-#define GALILEO_LEGACY_GPIO_INITIALIZER                 {0x03,0x00,0x00,0x00,0x00,0x00,0x00,0x03,0x00,0x3f,0x21,0x14,0x00,0x00,0x00,0x00,0x3f,0x00}
-#define GALILEO_GPIO_CONTROLLER_INITIALIZER             {0x05,0x15,0,0,0,0,0,0}
-
 BOARD_LEGACY_GPIO_CONFIG      mBoardLegacyGpioConfigTable  = GALILEO_LEGACY_GPIO_INITIALIZER;
 BOARD_GPIO_CONTROLLER_CONFIG  mBoardGpioControllerConfigTable  = GALILEO_GPIO_CONTROLLER_INITIALIZER;
 
@@ -432,10 +429,18 @@ BoardDetectionCallback (
   }
   DEBUG ((EFI_D_INFO, "Detected Galileo!\n"));
 
-  PcdSet64(PcdBoardInitPreMem, (UINT64)(UINTN)BoarInitPreMem);
-  PcdSet64(PcdBoardInitPostMem, (UINT64)(UINTN)BoarInitPostMem);
+  Status = PcdSet64S (PcdBoardInitPreMem, (UINT64)(UINTN)BoarInitPreMem);
+  ASSERT_EFI_ERROR(Status);
+  Status = PcdSet64S (PcdBoardInitPostMem, (UINT64)(UINTN)BoarInitPostMem);
+  ASSERT_EFI_ERROR(Status);
+
+  Status = PcdSet32S (PcdPciExpPerstResumeWellGpio, PCIEXP_PERST_RESUMEWELL_GPIO);
+  ASSERT_EFI_ERROR(Status);
+  Status = PcdSet32S (PcdFlashUpdateLedResumeWellGpio, GALILEO_FLASH_UPDATE_LED_RESUMEWELL_GPIO);
+  ASSERT_EFI_ERROR(Status);
 
   Status = PeiServicesInstallPpi(&mDetectedPpi);
+  ASSERT_EFI_ERROR(Status);
   return Status;
 }
 
