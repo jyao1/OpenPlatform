@@ -60,7 +60,9 @@ CheckResetButtonState (
              &ReadLength,
              &Buffer[1]
              );
-  ASSERT_EFI_ERROR (Status);
+  if (EFI_ERROR(Status)) {
+    return TRUE;
+  }
 
   //
   // Return the state of GPORT5_BIT0
@@ -71,17 +73,13 @@ CheckResetButtonState (
 /**
   Determines if a user is physically present by reading the reset button state.
 
-  @param  ImageHandle  The image handle of this driver.
-  @param  SystemTable  A pointer to the EFI System Table.
-
   @retval EFI_SUCCESS   Install the Secure Boot Helper Protocol successfully.
 
 **/
 EFI_STATUS
 EFIAPI
 PlatformSecureLibInitialize (
-  IN EFI_HANDLE        ImageHandle,
-  IN EFI_SYSTEM_TABLE  *SystemTable
+  VOID
   )
 {
   EFI_STATUS  Status;

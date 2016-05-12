@@ -211,9 +211,9 @@
   PlatformSecLib|QuarkPlatformPkg/Library/PlatformSecLib/PlatformSecLib.inf
   PlatformPcieHelperLib|QuarkPlatformPkg/Library/PlatformPcieHelperLib/PlatformPcieHelperLib.inf
   PlatformHelperLib|QuarkPlatformPkg/Library/PlatformHelperLib/DxePlatformHelperLib.inf
-!if $(GALILEO) == GEN2
+#!if $(GALILEO) == GEN2
   Pcal9555Lib|QuarkPlatformPkg/Board/GalileoGen2/Library/Pcal9555Lib/Pcal9555Lib.inf
-!endif
+#!endif
 
 [LibraryClasses.common.SEC]
   #

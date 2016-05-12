@@ -29,6 +29,7 @@
 
 [Sources]
   BoardEarlyInit.c
+  PhysicalPresence.c
 
 [Packages]
   MdePkg/MdePkg.dec
@@ -107,6 +108,7 @@
   gQuarkPlatformTokenSpaceGuid.PcdBoardInitPostMem
   gQuarkPlatformTokenSpaceGuid.PcdPciExpPerstResumeWellGpio
   gQuarkPlatformTokenSpaceGuid.PcdFlashUpdateLedResumeWellGpio
+  gQuarkPlatformTokenSpaceGuid.PcdUserIsPhysicallyPresent
 
 [Depex]
   gEfiPeiReadOnlyVariable2PpiGuid AND gQNCMemoryInitPpiGuid

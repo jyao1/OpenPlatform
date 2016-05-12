@@ -67,6 +67,12 @@ EarlyPlatformGpioCtrlerManipulation (
   VOID
   );
 
+EFI_STATUS
+EFIAPI
+PlatformSecureLibInitialize (
+  VOID
+  );
+
 /**
   Initialize state of I2C GPIO expanders.
 
@@ -238,6 +244,8 @@ BoarInitPostMem (
   //
   DEBUG ((EFI_D_INFO, "EarlyPlatformConfigGpioExpanders ()\n"));
   EarlyPlatformConfigGpioExpanders ();
+
+  PlatformSecureLibInitialize();
 }
 
 /**
