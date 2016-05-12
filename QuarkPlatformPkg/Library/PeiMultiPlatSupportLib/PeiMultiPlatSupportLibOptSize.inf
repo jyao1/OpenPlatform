@@ -1,0 +1,51 @@
+### @file
+# Finds the matched default data and creates GUID hob for it.
+#
+# Copyright (c) 2016, Intel Corporation. All rights reserved.<BR>
+# This program and the accompanying materials are licensed and made available under
+# the terms and conditions of the BSD License that accompanies this distribution.
+# The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php.
+# 
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+###
+
+[Defines]
+  INF_VERSION                    = 0x00010017
+  BASE_NAME                      = PeiMultiPlatSupportLibOptSize
+  FILE_GUID                      = 620AEEF4-FBD2-454F-AAB3-2A693C9FA04F
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = PEIM
+  LIBRARY_CLASS                  = MultiPlatSupportLib|PEIM
+#
+# The following information is for reference only and not required by the build tools.
+#
+# VALID_ARCHITECTURES = IA32 X64 IPF
+#
+
+[LibraryClasses]
+  BaseMemoryLib
+  PeiServicesTablePointerLib
+  HobLib
+  DebugLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SecurityPkg/SecurityPkg.dec
+  QuarkPlatformPkg/QuarkPlatformPkg.dec
+
+[Sources]
+  PeiMultiPlatSupportLibOptSize.c
+  InternalCommonLib.c
+
+[Ppis]
+  gEfiPeiMemoryDiscoveredPpiGuid                ## NOTIFY
+
+[Guids]
+  gEfiVariableGuid                              ## SOMETIMES_PRODUCES ## HOB
+  gEfiAuthenticatedVariableGuid                 ## SOMETIMES_CONSUMES ## HOB
+  gDefaultDataOptSizeFileGuid                   ## SOMETIMES_CONSUMES ## FV
+
