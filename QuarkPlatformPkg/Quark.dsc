@@ -42,167 +42,51 @@
 [SkuIds]
   0|DEFAULT              # The entry: 0|DEFAULT is reserved and always required.
 
+!include QuarkPlatformPkg/Include/Build/CorePkgInclude.dsc
+!include QuarkPlatformPkg/Include/Build/CorePkgConfig.dsc
+!include QuarkPlatformPkg/Include/Build/BuildOption.dsc
+
 ################################################################################
 #
 # Library Class section - list of all Library Classes needed by this Platform.
 #
 ################################################################################
 [LibraryClasses]
-  #
-  # Entry point
-  #
-  PeiCoreEntryPoint|MdePkg/Library/PeiCoreEntryPoint/PeiCoreEntryPoint.inf
-  PeimEntryPoint|MdePkg/Library/PeimEntryPoint/PeimEntryPoint.inf
-  DxeCoreEntryPoint|MdePkg/Library/DxeCoreEntryPoint/DxeCoreEntryPoint.inf
-  UefiDriverEntryPoint|MdePkg/Library/UefiDriverEntryPoint/UefiDriverEntryPoint.inf
-  UefiApplicationEntryPoint|MdePkg/Library/UefiApplicationEntryPoint/UefiApplicationEntryPoint.inf
-
-  #
-  # Basic
-  #
-  BaseLib|MdePkg/Library/BaseLib/BaseLib.inf
-  BaseMemoryLib|MdePkg/Library/BaseMemoryLibRepStr/BaseMemoryLibRepStr.inf
-  PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
-  CpuLib|MdePkg/Library/BaseCpuLib/BaseCpuLib.inf
-  CpuExceptionHandlerLib|UefiCpuPkg/Library/CpuExceptionHandlerLib/DxeCpuExceptionHandlerLib.inf
-  IoLib|MdePkg/Library/BaseIoLibIntrinsic/BaseIoLibIntrinsic.inf
-  PciLib|MdePkg/Library/BasePciLibPciExpress/BasePciLibPciExpress.inf
-  PciCf8Lib|MdePkg/Library/BasePciCf8Lib/BasePciCf8Lib.inf
-  PciExpressLib|MdePkg/Library/BasePciExpressLib/BasePciExpressLib.inf
-  PciSegmentLib|MdePkg/Library/BasePciSegmentLibPci/BasePciSegmentLibPci.inf
-  PciHostBridgeLib|QuarkPlatformPkg/Override/MdeModulePkg/Library/PciHostBridgeLibSimple/PciHostBridgeLibSimple.inf
-  CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
-  PeCoffLib|MdePkg/Library/BasePeCoffLib/BasePeCoffLib.inf
-!if $(SOURCE_DEBUG_ENABLE)
-  PeCoffExtraActionLib|SourceLevelDebugPkg/Library/PeCoffExtraActionLibDebug/PeCoffExtraActionLibDebug.inf
-  DebugCommunicationLib|SourceLevelDebugPkg/Library/DebugCommunicationLibSerialPort/DebugCommunicationLibSerialPort.inf
-!else
-  PeCoffExtraActionLib|MdePkg/Library/BasePeCoffExtraActionLibNull/BasePeCoffExtraActionLibNull.inf
-!endif
-  DebugAgentLib|MdeModulePkg/Library/DebugAgentLibNull/DebugAgentLibNull.inf
-  PeCoffGetEntryPointLib|MdePkg/Library/BasePeCoffGetEntryPointLib/BasePeCoffGetEntryPointLib.inf
-
-  #
-  # UEFI & PI
-  #
-  UefiBootServicesTableLib|MdePkg/Library/UefiBootServicesTableLib/UefiBootServicesTableLib.inf
-  UefiRuntimeServicesTableLib|MdePkg/Library/UefiRuntimeServicesTableLib/UefiRuntimeServicesTableLib.inf
-  UefiRuntimeLib|MdePkg/Library/UefiRuntimeLib/UefiRuntimeLib.inf
-  UefiLib|MdePkg/Library/UefiLib/UefiLib.inf
-  HiiLib|MdeModulePkg/Library/UefiHiiLib/UefiHiiLib.inf
-  UefiHiiServicesLib|MdeModulePkg/Library/UefiHiiServicesLib/UefiHiiServicesLib.inf
-  DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
-  UefiDecompressLib|IntelFrameworkModulePkg/Library/BaseUefiTianoCustomDecompressLib/BaseUefiTianoCustomDecompressLib.inf
-  PeiServicesTablePointerLib|MdePkg/Library/PeiServicesTablePointerLibIdt/PeiServicesTablePointerLibIdt.inf
-  PeiServicesLib|MdePkg/Library/PeiServicesLib/PeiServicesLib.inf
-  DxeServicesLib|MdePkg/Library/DxeServicesLib/DxeServicesLib.inf
-  DxeServicesTableLib|MdePkg/Library/DxeServicesTableLib/DxeServicesTableLib.inf
-  UefiCpuLib|UefiCpuPkg/Library/BaseUefiCpuLib/BaseUefiCpuLib.inf
-  SortLib|MdeModulePkg/Library/UefiSortLib/UefiSortLib.inf
-
-  #
-  # Generic Modules
-  #
-!if $(BOOT_SHELL_ONLY)
-  S3BootScriptLib|MdePkg/Library/BaseS3BootScriptLibNull/BaseS3BootScriptLibNull.inf
-!else
-  S3BootScriptLib|MdeModulePkg/Library/PiDxeS3BootScriptLib/DxeS3BootScriptLib.inf
-!endif
-  S3IoLib|MdePkg/Library/BaseS3IoLib/BaseS3IoLib.inf
-  S3PciLib|MdePkg/Library/BaseS3PciLib/BaseS3PciLib.inf
-  UefiUsbLib|MdePkg/Library/UefiUsbLib/UefiUsbLib.inf
-  UefiScsiLib|MdePkg/Library/UefiScsiLib/UefiScsiLib.inf
-  NetLib|MdeModulePkg/Library/DxeNetLib/DxeNetLib.inf
-  IpIoLib|MdeModulePkg/Library/DxeIpIoLib/DxeIpIoLib.inf
-  UdpIoLib|MdeModulePkg/Library/DxeUdpIoLib/DxeUdpIoLib.inf
-  DpcLib|MdeModulePkg/Library/DxeDpcLib/DxeDpcLib.inf
-  OemHookStatusCodeLib|MdeModulePkg/Library/OemHookStatusCodeLibNull/OemHookStatusCodeLibNull.inf
-  SynchronizationLib|MdePkg/Library/BaseSynchronizationLib/BaseSynchronizationLib.inf
-  SecurityManagementLib|MdeModulePkg/Library/DxeSecurityManagementLib/DxeSecurityManagementLib.inf
-  SmmCorePlatformHookLib|MdeModulePkg/Library/SmmCorePlatformHookLibNull/SmmCorePlatformHookLibNull.inf
-  PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-  HobLib|MdePkg/Library/DxeHobLib/DxeHobLib.inf
-  MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
-!if $(BOOT_SHELL_ONLY)
-  ReportStatusCodeLib|MdePkg/Library/BaseReportStatusCodeLibNull/BaseReportStatusCodeLibNull.inf
-!else
-  ReportStatusCodeLib|MdeModulePkg/Library/DxeReportStatusCodeLib/DxeReportStatusCodeLib.inf
-!endif
-  ExtractGuidedSectionLib|MdePkg/Library/DxeExtractGuidedSectionLib/DxeExtractGuidedSectionLib.inf
-!if $(BOOT_SHELL_ONLY)
-  LockBoxLib|MdeModulePkg/Library/LockBoxNullLib/LockBoxNullLib.inf
-!else
-  LockBoxLib|MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxDxeLib.inf
-!endif
-  VarCheckLib|MdeModulePkg/Library/VarCheckLib/VarCheckLib.inf
-  DebugPrintErrorLevelLib|MdePkg/Library/BaseDebugPrintErrorLevelLib/BaseDebugPrintErrorLevelLib.inf
-!if $(LOGGING)
-  DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-!else
-  DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
-!endif
-!if $(PERFORMANCE_ENABLE)
-  PerformanceLib|MdeModulePkg/Library/DxePerformanceLib/DxePerformanceLib.inf
-!else
-  PerformanceLib|MdePkg/Library/BasePerformanceLibNull/BasePerformanceLibNull.inf
-!endif
-
-!if $(SECURE_BOOT_ENABLE) || $(MEASURED_BOOT_ENABLE)
-  OpensslLib|CryptoPkg/Library/OpensslLib/OpensslLib.inf
-  IntrinsicLib|CryptoPkg/Library/IntrinsicLib/IntrinsicLib.inf
-  BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
-!endif
 
 !if $(SECURE_BOOT_ENABLE)
   PlatformSecureLib|QuarkPlatformPkg/Library/PlatformSecureLib/PlatformSecureLib.inf
-  AuthVariableLib|SecurityPkg/Library/AuthVariableLib/AuthVariableLib.inf
-!else
-  AuthVariableLib|MdeModulePkg/Library/AuthVariableLibNull/AuthVariableLibNull.inf
 !endif
 
 !if $(MEASURED_BOOT_ENABLE)
-  TpmMeasurementLib|SecurityPkg/Library/DxeTpmMeasurementLib/DxeTpmMeasurementLib.inf
-  Tpm12CommandLib|SecurityPkg/Library/Tpm12CommandLib/Tpm12CommandLib.inf
-!if $(TPM_12_HARDWARE) == LPC
-  Tpm12DeviceLib|SecurityPkg/Library/Tpm12DeviceLibDTpm/Tpm12DeviceLibDTpm.inf
-!endif
 !if $(TPM_12_HARDWARE) == ATMEL_I2C
   Tpm12DeviceLib|QuarkPlatformPkg/Library/Tpm12DeviceLibAtmelI2c/Tpm12DeviceLibAtmelI2c.inf
 !endif
 !if $(TPM_12_HARDWARE) == INFINEON_I2C
   Tpm12DeviceLib|QuarkPlatformPkg/Library/Tpm12DeviceLibInfineonI2c/Tpm12DeviceLibInfineonI2c.inf
 !endif
-  TcgPpVendorLib|SecurityPkg/Library/TcgPpVendorLibNull/TcgPpVendorLibNull.inf
-!else
-  TpmMeasurementLib|MdeModulePkg/Library/TpmMeasurementLibNull/TpmMeasurementLibNull.inf
 !endif
-
-  FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
 
   #
   # CPU
   #
   MtrrLib|QuarkSocPkg/QuarkNorthCluster/Library/MtrrLib/MtrrLib.inf
-  LocalApicLib|UefiCpuPkg/Library/BaseXApicLib/BaseXApicLib.inf
+  SmmCpuFeaturesLib|QuarkSocPkg/QuarkNorthCluster/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
 
   #
   # Quark North Cluster
   #
   SmmLib|QuarkSocPkg/QuarkNorthCluster/Library/QNCSmmLib/QNCSmmLib.inf
   SmbusLib|QuarkSocPkg/QuarkNorthCluster/Library/SmbusLib/SmbusLib.inf
-  TimerLib|PcAtChipsetPkg/Library/AcpiTimerLib/DxeAcpiTimerLib.inf
   ResetSystemLib|QuarkSocPkg/QuarkNorthCluster/Library/ResetSystemLib/ResetSystemLib.inf
   IntelQNCLib|QuarkSocPkg/QuarkNorthCluster/Library/IntelQNCLib/IntelQNCLib.inf
   QNCAccessLib|QuarkSocPkg/QuarkNorthCluster/Library/QNCAccessLib/QNCAccessLib.inf
-  IoApicLib|PcAtChipsetPkg/Library/BaseIoApicLib/BaseIoApicLib.inf
+  ResetSystemLib|QuarkSocPkg/QuarkNorthCluster/Library/ResetSystemLib/ResetSystemLib.inf
 
   #
   # Quark South Cluster
   #
   IohLib|QuarkSocPkg/QuarkSouthCluster/Library/IohLib/IohLib.inf
   I2cLib|QuarkSocPkg/QuarkSouthCluster/Library/I2cLib/I2cLib.inf
-  SerialPortLib|MdeModulePkg/Library/BaseSerialPortLib16550/BaseSerialPortLib16550.inf
-  PlatformHookLib|MdeModulePkg/Library/BasePlatformHookLibNull/BasePlatformHookLibNull.inf
 
   #
   # Quark Platform
@@ -215,107 +99,14 @@
   Pcal9555Lib|QuarkPlatformPkg/Board/GalileoGen2/Library/Pcal9555Lib/Pcal9555Lib.inf
 #!endif
 
-[LibraryClasses.common.SEC]
-  #
-  # SEC specific phase
-  #
-  ReportStatusCodeLib|MdePkg/Library/BaseReportStatusCodeLibNull/BaseReportStatusCodeLibNull.inf
-  PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
-  TimerLib|PcAtChipsetPkg/Library/AcpiTimerLib/BaseAcpiTimerLib.inf
-  HobLib|MdePkg/Library/PeiHobLib/PeiHobLib.inf
-  MemoryAllocationLib|MdePkg/Library/PeiMemoryAllocationLib/PeiMemoryAllocationLib.inf
-  CpuExceptionHandlerLib|UefiCpuPkg/Library/CpuExceptionHandlerLib/SecPeiCpuExceptionHandlerLib.inf
-
 [LibraryClasses.IA32.PEIM,LibraryClasses.IA32.PEI_CORE]
   #
   # PEI phase common
   #
-  PcdLib|MdePkg/Library/PeiPcdLib/PeiPcdLib.inf
-  HobLib|MdePkg/Library/PeiHobLib/PeiHobLib.inf
-  MemoryAllocationLib|MdePkg/Library/PeiMemoryAllocationLib/PeiMemoryAllocationLib.inf
-!if $(BOOT_SHELL_ONLY)
-  ReportStatusCodeLib|MdePkg/Library/BaseReportStatusCodeLibNull/BaseReportStatusCodeLibNull.inf
-!else
-  ReportStatusCodeLib|MdeModulePkg/Library/PeiReportStatusCodeLib/PeiReportStatusCodeLib.inf
-!endif
-  ExtractGuidedSectionLib|MdePkg/Library/PeiExtractGuidedSectionLib/PeiExtractGuidedSectionLib.inf
-!if $(BOOT_SHELL_ONLY)
-  LockBoxLib|MdeModulePkg/Library/LockBoxNullLib/LockBoxNullLib.inf
-!else
-  LockBoxLib|MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxPeiLib.inf
-!endif
-  TimerLib|PcAtChipsetPkg/Library/AcpiTimerLib/BaseAcpiTimerLib.inf
   PlatformHelperLib|QuarkPlatformPkg/Library/PlatformHelperLib/PeiPlatformHelperLib.inf
-  CpuExceptionHandlerLib|UefiCpuPkg/Library/CpuExceptionHandlerLib/SecPeiCpuExceptionHandlerLib.inf
-!if $(SECURE_BOOT_ENABLE) || $(MEASURED_BOOT_ENABLE)
-  BaseCryptLib|CryptoPkg/Library/BaseCryptLib/PeiCryptLib.inf
-!endif
-!if $(PERFORMANCE_ENABLE)
-  PerformanceLib|MdeModulePkg/Library/PeiPerformanceLib/PeiPerformanceLib.inf
-!endif
-
-[LibraryClasses.IA32.DXE_CORE]
-  HobLib|MdePkg/Library/DxeCoreHobLib/DxeCoreHobLib.inf
-  MemoryAllocationLib|MdeModulePkg/Library/DxeCoreMemoryAllocationLib/DxeCoreMemoryAllocationLib.inf
-  CpuExceptionHandlerLib|UefiCpuPkg/Library/CpuExceptionHandlerLib/DxeCpuExceptionHandlerLib.inf
-!if $(PERFORMANCE_ENABLE)
-  PerformanceLib|MdeModulePkg/Library/DxeCorePerformanceLib/DxeCorePerformanceLib.inf
-!endif
-
-[LibraryClasses.IA32.DXE_SMM_DRIVER]
-  SmmServicesTableLib|MdePkg/Library/SmmServicesTableLib/SmmServicesTableLib.inf
-!if $(BOOT_SHELL_ONLY)
-  ReportStatusCodeLib|MdePkg/Library/BaseReportStatusCodeLibNull/BaseReportStatusCodeLibNull.inf
-!else
-  ReportStatusCodeLib|MdeModulePkg/Library/SmmReportStatusCodeLib/SmmReportStatusCodeLib.inf
-!endif
-  MemoryAllocationLib|MdePkg/Library/SmmMemoryAllocationLib/SmmMemoryAllocationLib.inf
-!if $(BOOT_SHELL_ONLY)
-  LockBoxLib|MdeModulePkg/Library/LockBoxNullLib/LockBoxNullLib.inf
-!else
-  LockBoxLib|MdeModulePkg/Library/SmmLockBoxLib/SmmLockBoxSmmLib.inf
-!endif
-  PciLib|MdePkg/Library/BasePciLibCf8/BasePciLibCf8.inf
-  CpuExceptionHandlerLib|UefiCpuPkg/Library/CpuExceptionHandlerLib/SmmCpuExceptionHandlerLib.inf
-  SmmMemLib|MdePkg/Library/SmmMemLib/SmmMemLib.inf
-!if $(SECURE_BOOT_ENABLE) || $(MEASURED_BOOT_ENABLE)
-  BaseCryptLib|CryptoPkg/Library/BaseCryptLib/SmmCryptLib.inf
-!endif
-!if $(PERFORMANCE_ENABLE)
-  PerformanceLib|MdeModulePkg/Library/SmmPerformanceLib/SmmPerformanceLib.inf
-!endif
-
-[LibraryClasses.IA32.SMM_CORE]
-  SmmServicesTableLib|MdeModulePkg/Library/PiSmmCoreSmmServicesTableLib/PiSmmCoreSmmServicesTableLib.inf
-!if $(BOOT_SHELL_ONLY)
-  ReportStatusCodeLib|MdePkg/Library/BaseReportStatusCodeLibNull/BaseReportStatusCodeLibNull.inf
-!else
-  ReportStatusCodeLib|MdeModulePkg/Library/SmmReportStatusCodeLib/SmmReportStatusCodeLib.inf
-!endif
-  MemoryAllocationLib|MdeModulePkg/Library/PiSmmCoreMemoryAllocationLib/PiSmmCoreMemoryAllocationLib.inf
-  PciLib|MdePkg/Library/BasePciLibCf8/BasePciLibCf8.inf
-  SmmMemLib|MdePkg/Library/SmmMemLib/SmmMemLib.inf
-!if $(SECURE_BOOT_ENABLE) || $(MEASURED_BOOT_ENABLE)
-  BaseCryptLib|CryptoPkg/Library/BaseCryptLib/SmmCryptLib.inf
-!endif
-!if $(PERFORMANCE_ENABLE)
-  PerformanceLib|MdeModulePkg/Library/SmmCorePerformanceLib/SmmCorePerformanceLib.inf
-!endif
 
 [LibraryClasses.IA32.DXE_RUNTIME_DRIVER]
-!if $(BOOT_SHELL_ONLY)
-  ReportStatusCodeLib|MdePkg/Library/BaseReportStatusCodeLibNull/BaseReportStatusCodeLibNull.inf
-!else
-  ReportStatusCodeLib|MdeModulePkg/Library/RuntimeDxeReportStatusCodeLib/RuntimeDxeReportStatusCodeLib.inf
-!endif
   QNCAccessLib|QuarkSocPkg/QuarkNorthCluster/Library/QNCAccessLib/RuntimeQNCAccessLib.inf
-  PciLib|MdePkg/Library/BasePciLibCf8/BasePciLibCf8.inf
-!if $(SECURE_BOOT_ENABLE) || $(MEASURED_BOOT_ENABLE)
-  BaseCryptLib|CryptoPkg/Library/BaseCryptLib/RuntimeCryptLib.inf
-!endif
-
-[LibraryClasses.IA32.UEFI_DRIVER,LibraryClasses.IA32.UEFI_APPLICATION]
-  PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
 
 ################################################################################
 #
@@ -323,16 +114,6 @@
 #
 ################################################################################
 [PcdsFeatureFlag]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdDevicePathSupportDevicePathToText|TRUE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdDevicePathSupportDevicePathFromText|TRUE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSupportUpdateCapsuleReset|TRUE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdDxeIplSwitchToLongMode|FALSE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdPciBusHotplugDeviceSupport|FALSE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdInstallAcpiSdtProtocol|TRUE
-!if $(SOURCE_DEBUG_ENABLE)
-  gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmDebug|TRUE
-!endif
-
 !if $(TARGET) == "RELEASE"
   gQuarkPlatformTokenSpaceGuid.WaitIfResetDueToError|FALSE
 !else
@@ -340,67 +121,14 @@
 !endif
 
 [PcdsFixedAtBuild]
-  gUefiCpuPkgTokenSpaceGuid.PcdCpuMaxLogicalProcessorNumber|1
-  gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdS3AcpiReservedMemorySize|0x20000
-!if $(BOOT_SHELL_ONLY)
-  gEfiMdeModulePkgTokenSpaceGuid.PcdResetOnMemoryTypeInformationChange|FALSE
-!else
-  gEfiMdeModulePkgTokenSpaceGuid.PcdResetOnMemoryTypeInformationChange|TRUE
-!endif
-!if $(LOGGING)
-  !if $(SOURCE_DEBUG_ENABLE)
-    gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x17
-  !else
-    gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x27
-  !endif
-  gEfiMdePkgTokenSpaceGuid.PcdReportStatusCodePropertyMask|0x07
-!else
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x0
-  gEfiMdePkgTokenSpaceGuid.PcdPostCodePropertyMask|0x0
-  gEfiMdePkgTokenSpaceGuid.PcdReportStatusCodePropertyMask|0x3
-!endif
-  gEfiMdePkgTokenSpaceGuid.PcdPostCodePropertyMask|0x18
-  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress|0xE0000000
 !if $(GALILEO) == GEN1
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|460800
 !endif
 !if $(GALILEO) == GEN2
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|921600
 !endif
-  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultDataBits|8
-  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultParity|1
-  gEfiMdePkgTokenSpaceGuid.PcdUartDefaultStopBits|1
-  gEfiMdePkgTokenSpaceGuid.PcdDefaultTerminalType|0
-!if $(PERFORMANCE_ENABLE)
-  gEfiMdePkgTokenSpaceGuid.PcdPerformanceLibraryPropertyMask|0x1
-  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxPeiPerformanceLogEntries|80
-!else
-  gEfiMdePkgTokenSpaceGuid.PcdPerformanceLibraryPropertyMask|0x00
-!endif
-  gEfiMdeModulePkgTokenSpaceGuid.PcdLoadModuleAtFixAddressEnable|0
-!if $(SECURE_BOOT_ENABLE)
-  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxVariableSize|0x2000
-!endif
-  gEfiMdeModulePkgTokenSpaceGuid.PcdHwErrStorageSize|0x00002000
-  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxHardwareErrorVariableSize|0x1000
-  ## RTC Update Timeout Value, need to increase timeout since also
-  # waiting for RTC to be busy.
-  gEfiMdeModulePkgTokenSpaceGuid.PcdRealTimeClockUpdateTimeout|500000
-
-!if $(SECURE_BOOT_ENABLE)
-  # override the default values from SecurityPkg to ensure images from all sources are verified in secure boot
-  gEfiSecurityPkgTokenSpaceGuid.PcdOptionRomImageVerificationPolicy|0x04
-  gEfiSecurityPkgTokenSpaceGuid.PcdFixedMediaImageVerificationPolicy|0x04
-  gEfiSecurityPkgTokenSpaceGuid.PcdRemovableMediaImageVerificationPolicy|0x04
-!endif
   gQuarkPlatformTokenSpaceGuid.PcdEsramStage1Base|0x80000000
 
-!if $(SOURCE_DEBUG_ENABLE)
-  gEfiSourceLevelDebugPkgTokenSpaceGuid.PcdDebugLoadImageMethod|0x2
-!endif
-
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialUseMmio|TRUE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0x9000B000
 !if $(GALILEO) == GEN1
   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialBaudRate|460800
   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialUseHardwareFlowControl|FALSE
@@ -409,82 +137,15 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialBaudRate|921600
   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialUseHardwareFlowControl|FALSE
 !endif
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialLineControl|0x03
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialFifoControl|0x07
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialDetectCable|FALSE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialClockRate|44236800
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialPciDeviceInfo|{0x14, 0x05, 0x84, 0x00, 0xFF}
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterStride|4
 
-  #
-  #  typedef struct {
-  #    UINT16  VendorId;          ///< Vendor ID to match the PCI device.  The value 0xFFFF terminates the list of entries.
-  #    UINT16  DeviceId;          ///< Device ID to match the PCI device
-  #    UINT32  ClockRate;         ///< UART clock rate.  Set to 0 for default clock rate of 1843200 Hz
-  #    UINT64  Offset;            ///< The byte offset into to the BAR
-  #    UINT8   BarIndex;          ///< Which BAR to get the UART base address
-  #    UINT8   RegisterStride;    ///< UART register stride in bytes.  Set to 0 for default register stride of 1 byte.
-  #    UINT16  ReceiveFifoDepth;  ///< UART receive FIFO depth in bytes. Set to 0 for a default FIFO depth of 16 bytes.
-  #    UINT16  TransmitFifoDepth; ///< UART transmit FIFO depth in bytes. Set to 0 for a default FIFO depth of 16 bytes.
-  #    UINT8   Reserved[2];
-  #  } PCI_SERIAL_PARAMETER;
-  #
-  # Vendor 8086 Device 0936 Prog Interface 2, BAR #0, Offset 0, Stride = 4, Clock 44236800 (0x2a300000)
-  # Vendor 8086 Device 0936 Prog Interface 2, BAR #0, Offset 0, Stride = 4, Clock 44236800 (0x2a300000)
-  #
-  #                                                       [Vendor]   [Device]  [---ClockRate---]  [------------Offset-----------] [Bar] [Stride] [RxFifo] [TxFifo]   [Rsvd]   [Vendor]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdPciSerialParameters|{0x86,0x80, 0x36,0x09, 0x0,0x0,0xA3,0x02, 0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0, 0x00,    0x04, 0x0,0x0, 0x0,0x0, 0x0,0x0, 0xff,0xff}
-
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiIoPciBusNumber           |0
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiIoPciDeviceNumber        |31
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiIoPciFunctionNumber      |0
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiIoPciEnableRegisterOffset|0x4b
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiIoBarEnableMask          |0x80
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiIoPciBarRegisterOffset   |0x48
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiIoPortBaseAddress        |0x1000
-  gPcAtChipsetPkgTokenSpaceGuid.PcdAcpiPm1TmrOffset             |0x0008
-
-  gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x21, 0xaa, 0x2c, 0x46, 0x14, 0x76, 0x03, 0x45, 0x83, 0x6e, 0x8a, 0xb6, 0xf4, 0x66, 0x23, 0x31 }
-
-  gEfiMdeModulePkgTokenSpaceGuid.PcdConInConnectOnDemand|FALSE
-
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciReservedIobase   |0x2000
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciReservedIoLimit  |0xFFFF
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciReservedMemBase  |0x90000000
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciReservedMemLimit |0xAFFFFFFF
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciReservedMemAbove4GBBase  |0x0
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciReservedMemAbove4GBLimit |0x0
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciDmaAbove4G|FALSE
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdPciNoExtendedConfigSpace|FALSE
-
-[PcdsPatchableInModule]
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x803000C7
-  #gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80080046
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVpdBaseAddress|0x0
 
 [PcdsDynamicExHii.common.DEFAULT]
-!if $(PERFORMANCE_ENABLE)
-  gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut|L"Timeout"|gEfiGlobalVariableGuid|0x0|0
-!else
-  gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut|L"Timeout"|gEfiGlobalVariableGuid|0x0|5
-!endif
   gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdBootState|L"BootState"|gQuarkPlatformTokenSpaceGuid|0x0|TRUE
 
 [PcdsDynamicExDefault.common.DEFAULT]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdS3BootScriptTablePrivateDataPtr|0x0
   gQuarkPlatformTokenSpaceGuid.PcdEnableFastBoot|TRUE
   gQuarkPlatformTokenSpaceGuid.PcdUserIsPhysicallyPresent|FALSE
   gQuarkPlatformTokenSpaceGuid.PcdSpiFlashDeviceSize|0
-
-!if $(MEASURED_BOOT_ENABLE)
-  #
-  # TPM1.2      { 0x8b01e5b6, 0x4f19, 0x46e8, { 0xab, 0x93, 0x1c, 0x53, 0x67, 0x1b, 0x90, 0xcc } }
-  # TPM2.0 DTPM { 0x286bf25a, 0xc2c3, 0x408c, { 0xb3, 0xb4, 0x25, 0xe6, 0x75, 0x8b, 0x73, 0x17 } }
-  #
-  gEfiSecurityPkgTokenSpaceGuid.PcdTpmInstanceGuid|{0xb6, 0xe5, 0x01, 0x8b, 0x19, 0x4f, 0xe8, 0x46, 0xab, 0x93, 0x1c, 0x53, 0x67, 0x1b, 0x90, 0xcc}
-  gEfiSecurityPkgTokenSpaceGuid.PcdTpmInitializationPolicy|1
-  gEfiSecurityPkgTokenSpaceGuid.PcdTpmScrtmPolicy|1
-!endif
 
 [PcdsDynamicExVpd]
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor|*|32|L"EDK II"
@@ -560,50 +221,6 @@
 ###################################################################################################
 
 [Components.IA32]
-  #
-  # SEC Core
-  #
-  UefiCpuPkg/SecCore/SecCore.inf {
-    !if $(SOURCE_DEBUG_ENABLE)
-      <LibraryClasses>
-        PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
-        DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/SecPeiDebugAgentLib.inf
-        ResetSystemLib|QuarkSocPkg/QuarkNorthCluster/Library/ResetSystemLib/ResetSystemLib.inf
-    !endif
-  }
-
-  #
-  # PEI Core
-  #
-  MdeModulePkg/Core/Pei/PeiMain.inf
-
-  #
-  # PEIM
-  #
-  MdeModulePkg/Universal/PCD/Pei/Pcd.inf {
-    <LibraryClasses>
-      PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
-  }
-!if $(BOOT_SHELL_ONLY) == FALSE
-  MdeModulePkg/Universal/ReportStatusCodeRouter/Pei/ReportStatusCodeRouterPei.inf
-  MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf {
-    <LibraryClasses>
-      !if $(LOGGING)
-        DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-      !else
-        SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-      !endif
-  }
-!endif
-
-  MdeModulePkg/Universal/FaultTolerantWritePei/FaultTolerantWritePei.inf
-  MdeModulePkg/Universal/Variable/Pei/VariablePei.inf
-  MdeModulePkg/Universal/PcatSingleSegmentPciCfg2Pei/PcatSingleSegmentPciCfg2Pei.inf
-!if $(BOOT_SHELL_ONLY) == FALSE
-  UefiCpuPkg/CpuMpPei/CpuMpPei.inf
-  MdeModulePkg/Universal/CapsulePei/CapsulePei.inf
-!endif
-
   QuarkSocPkg/QuarkNorthCluster/MemoryInit/Pei/MemoryInitPei.inf
 #!if $(GALILEO) == GEN1
   QuarkPlatformPkg/Board/Galileo/BoardEarlyInit/BoardEarlyInit.inf
@@ -614,26 +231,11 @@
   QuarkPlatformPkg/PlatformInit/PlatformInitPei/PlatformEarlyInit.inf
 
 !if $(BOOT_SHELL_ONLY) == FALSE
-  UefiCpuPkg/PiSmmCommunication/PiSmmCommunicationPei.inf
-!endif
-
-  MdeModulePkg/Core/DxeIplPeim/DxeIpl.inf
-
-!if $(BOOT_SHELL_ONLY) == FALSE
   #
   # S3
   #
   QuarkSocPkg/QuarkNorthCluster/Smm/Pei/SmmAccessPei/SmmAccessPei.inf
   QuarkSocPkg/QuarkNorthCluster/Smm/Pei/SmmControlPei/SmmControlPei.inf
-  UefiCpuPkg/Universal/Acpi/S3Resume2Pei/S3Resume2Pei.inf
-!endif
-
-  #
-  # Trusted Platform Module
-  #
-!if $(MEASURED_BOOT_ENABLE)
-  SecurityPkg/Tcg/TrEEConfig/TrEEConfigPei.inf
-  SecurityPkg/Tcg/TcgPei/TcgPei.inf
 !endif
 
 !if $(BOOT_SHELL_ONLY) == FALSE
@@ -641,28 +243,10 @@
   # Recovery
   #
   QuarkSocPkg/QuarkSouthCluster/Usb/Common/Pei/UsbPei.inf
-  MdeModulePkg/Bus/Pci/EhciPei/EhciPei.inf
   QuarkSocPkg/QuarkSouthCluster/Usb/Ohci/Pei/OhciPei.inf
-  MdeModulePkg/Bus/Usb/UsbBotPei/UsbBotPei.inf
-  MdeModulePkg/Bus/Usb/UsbBusPei/UsbBusPei.inf
-  FatPkg/FatPei/FatPei.inf
-  MdeModulePkg/Universal/Disk/CdExpressPei/CdExpressPei.inf
 !endif
 
 [Components.IA32]
-  #
-  # DXE Core
-  #
-  MdeModulePkg/Core/Dxe/DxeMain.inf
-
-!if $(SOURCE_DEBUG_ENABLE)
-  SourceLevelDebugPkg/DebugAgentDxe/DebugAgentDxe.inf {
-    <LibraryClasses>
-      DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/DxeDebugAgentLib.inf
-      ResetSystemLib|QuarkSocPkg/QuarkNorthCluster/Library/ResetSystemLib/ResetSystemLib.inf
-  }
-!endif
-
 
   QuarkPlatformPkg/PlatformInit/PlatformInitDxe/PlatformInitDxe.inf
 #!if $(GALILEO) == GEN1
@@ -672,87 +256,12 @@
   QuarkPlatformPkg/Board/GalileoGen2/BoardInit/BoardInitDxe.inf
 #!endif
 
-  #
-  # Components that produce the architectural protocols
-  #
-  MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf  {
-    <LibraryClasses>
-!if $(SECURE_BOOT_ENABLE)
-      NULL|SecurityPkg/Library/DxeImageVerificationLib/DxeImageVerificationLib.inf
-!endif
- }
-  UefiCpuPkg/CpuDxe/CpuDxe.inf
-  MdeModulePkg/Universal/Metronome/Metronome.inf
-  MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
-  MdeModulePkg/Core/RuntimeDxe/RuntimeDxe.inf
-!if $(BOOT_SHELL_ONLY)
-  MdeModulePkg/Universal/Variable/EmuRuntimeDxe/EmuVariableRuntimeDxe.inf
-!else
-  MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteSmm.inf
-!if $(SECURE_BOOT_ENABLE)
-  SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
-!endif
-  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf
-  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmm.inf {
-    <LibraryClasses>
-      NULL|MdeModulePkg/Library/VarCheckUefiLib/VarCheckUefiLib.inf
-      NULL|MdeModulePkg/Library/VarCheckHiiLib/VarCheckHiiLib.inf
-      NULL|MdeModulePkg/Library/VarCheckPcdLib/VarCheckPcdLib.inf
-  }
-!endif
-
-  MdeModulePkg/Universal/CapsuleRuntimeDxe/CapsuleRuntimeDxe.inf {
-    <LibraryClasses>
-!if $(BOOT_SHELL_ONLY)
-      CapsuleLib|MdeModulePkg/Library/DxeCapsuleLibNull/DxeCapsuleLibNull.inf
-!else
-      GenericBdsLib|IntelFrameworkModulePkg/Library/GenericBdsLib/GenericBdsLib.inf
-      CapsuleLib|IntelFrameworkModulePkg/Library/DxeCapsuleLib/DxeCapsuleLib.inf
-!endif
-  }
-  MdeModulePkg/Universal/MonotonicCounterRuntimeDxe/MonotonicCounterRuntimeDxe.inf
-  MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
-  PcAtChipsetPkg/PcatRealTimeClockRuntimeDxe/PcatRealTimeClockRuntimeDxe.inf
-
-  #
-  # Following are the DXE drivers (alphabetical order)
-  #
-  MdeModulePkg/Universal/DevicePathDxe/DevicePathDxe.inf
-  MdeModulePkg/Universal/PCD/Dxe/Pcd.inf {
-    <LibraryClasses>
-      PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
-  }
-
-#  MdeModulePkg/Bus/Pci/PciHostBridgeDxe/PciHostBridgeDxe.inf
-  QuarkPlatformPkg/Override/MdeModulePkg/Bus/Pci/PciHostBridge/PciHostBridge.inf
 !if $(BOOT_SHELL_ONLY) == FALSE
   QuarkPlatformPkg/Flash/SpiFvbServices/PlatformSpi.inf
   QuarkPlatformPkg/Flash/SpiFvbServices/PlatformSmmSpi.inf
 !endif
-  UefiCpuPkg/CpuIo2Dxe/CpuIo2Dxe.inf
-
-  #
-  # Platform
-  #
-  MdeModulePkg/Universal/BdsDxe/BdsDxe.inf {
-    <LibraryClasses>
-      UefiBootManagerLib|MdeModulePkg/Library/UefiBootManagerLib/UefiBootManagerLib.inf
-      PlatformBootManagerLib|QuarkPlatformPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
-  }
-!if $(BOOT_SHELL_ONLY) == FALSE
-  MdeModulePkg/Application/UiApp/UiApp.inf {
-    <LibraryClasses>
-      NULL|MdeModulePkg/Library/DeviceManagerUiLib/DeviceManagerUiLib.inf
-      NULL|MdeModulePkg/Library/BootManagerUiLib/BootManagerUiLib.inf
-      NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
-
-      UefiBootManagerLib|MdeModulePkg/Library/UefiBootManagerLib/UefiBootManagerLib.inf
-      PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-  }
-!endif
 
   QuarkSocPkg/QuarkNorthCluster/QNCInit/Dxe/QNCInitDxe.inf
-  PcAtChipsetPkg/HpetTimerDxe/HpetTimerDxe.inf
 
 !if $(BOOT_SHELL_ONLY) == FALSE
   QuarkSocPkg/QuarkNorthCluster/Smm/Dxe/SmmAccessDxe/SmmAccess.inf
@@ -762,51 +271,12 @@
   }
   QuarkSocPkg/QuarkNorthCluster/Spi/PchSpiSmm.inf
   QuarkSocPkg/QuarkNorthCluster/S3Support/Dxe/QncS3Support.inf
-  MdeModulePkg/Universal/SectionExtractionDxe/SectionExtractionDxe.inf
-!endif
-
-  MdeModulePkg/Universal/MemoryTest/NullMemoryTestDxe/NullMemoryTestDxe.inf
-
-!if $(BOOT_SHELL_ONLY) == FALSE
-  MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
-  MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf  {
-    <LibraryClasses>
-      !if $(LOGGING)
-        DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-      !else
-        SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-      !endif
-  }
-  MdeModulePkg/Universal/ReportStatusCodeRouter/Smm/ReportStatusCodeRouterSmm.inf
-  MdeModulePkg/Universal/StatusCodeHandler/Smm/StatusCodeHandlerSmm.inf {
-    <LibraryClasses>
-      !if $(LOGGING)
-        DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-      !else
-        SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-      !endif
-  }
 !endif
 
 !if $(BOOT_SHELL_ONLY) == FALSE
   #
   # ACPI
   #
-  MdeModulePkg/Universal/Acpi/S3SaveStateDxe/S3SaveStateDxe.inf
-#  MdeModulePkg/Universal/Acpi/BootScriptExecutorDxe/BootScriptExecutorDxe.inf {
-  QuarkPlatformPkg/Override/MdeModulePkg/Universal/Acpi/BootScriptExecutorDxe/BootScriptExecutorDxe.inf {
-    <LibraryClasses>
-      !if $(LOGGING)
-        DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-      !else
-        SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-      !endif
-      !if $(SOURCE_DEBUG_ENABLE)
-        DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/DxeDebugAgentLib.inf
-        ResetSystemLib|QuarkSocPkg/QuarkNorthCluster/Library/ResetSystemLib/ResetSystemLib.inf
-      !endif
-  }
-  MdeModulePkg/Universal/Acpi/AcpiTableDxe/AcpiTableDxe.inf
   QuarkPlatformPkg/Acpi/AcpiPlatform/AcpiPlatform.inf
 #!if $(GALILEO) == GEN1
   QuarkPlatformPkg/Board/Galileo/AcpiTables/AcpiBoard.inf
@@ -820,44 +290,17 @@
   #
   # SMM
   #
-  MdeModulePkg/Core/PiSmmCore/PiSmmIpl.inf
-  MdeModulePkg/Core/PiSmmCore/PiSmmCore.inf
-  UefiCpuPkg/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.inf {
-    <LibraryClasses>
-      SmmCpuFeaturesLib|QuarkSocPkg/QuarkNorthCluster/Library/SmmCpuFeaturesLib/SmmCpuFeaturesLib.inf
-      SmmCpuPlatformHookLib|UefiCpuPkg/Library/SmmCpuPlatformHookLibNull/SmmCpuPlatformHookLibNull.inf
-
-      !if $(LOGGING)
-        DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-      !else
-        SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-      !endif
-      !if $(SOURCE_DEBUG_ENABLE)
-        DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/SmmDebugAgentLib.inf
-        ResetSystemLib|QuarkSocPkg/QuarkNorthCluster/Library/ResetSystemLib/ResetSystemLib.inf
-      !endif
-    <PcdsPatchableInModule>
-      #
-      # Disable DEBUG_CACHE because SMI entry/exit may change MTRRs
-      #
-      gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x801000C7
-  }
-
-  UefiCpuPkg/CpuIo2Smm/CpuIo2Smm.inf
   QuarkSocPkg/QuarkNorthCluster/Smm/Dxe/SmmControlDxe/SmmControlDxe.inf
   QuarkSocPkg/QuarkNorthCluster/Smm/DxeSmm/QncSmmDispatcher/QNCSmmDispatcher.inf
   QuarkPlatformPkg/Acpi/AcpiSmm/AcpiSmmPlatform.inf
   QuarkPlatformPkg/Feature/PowerManagement/SleepSmm/SleepSmmPlatform.inf
   QuarkPlatformPkg/Feature/PowerManagement/CpuPowerManagement/SmmPowerManagement.inf
-  MdeModulePkg/Universal/LockBox/SmmLockBox/SmmLockBox.inf
-  UefiCpuPkg/PiSmmCommunication/PiSmmCommunicationSmm.inf
 !endif
 
 !if $(BOOT_SHELL_ONLY) == FALSE
   #
   # SMBIOS
   #
-  MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
   QuarkPlatformPkg/Feature/Smbios/SmbiosMiscDxe/SmbiosMiscDxe.inf
   QuarkPlatformPkg/Feature/Smbios/MemorySubClass/MemorySubClass.inf
 !endif
@@ -866,20 +309,13 @@
   # PCI
   #
   QuarkPlatformPkg/Pci/Dxe/PciPlatform/PciPlatform.inf
-  MdeModulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf
   QuarkSocPkg/QuarkSouthCluster/IohInit/Dxe/IohInitDxe.inf
-  MdeModulePkg/Bus/Pci/PciSioSerialDxe/PciSioSerialDxe.inf
 
 !if $(BOOT_SHELL_ONLY) == FALSE
   #
   # USB
   #
-  MdeModulePkg/Bus/Pci/EhciDxe/EhciDxe.inf
   QuarkSocPkg/QuarkSouthCluster/Usb/Ohci/Dxe/OhciDxe.inf
-  MdeModulePkg/Bus/Usb/UsbBusDxe/UsbBusDxe.inf
-  MdeModulePkg/Bus/Usb/UsbKbDxe/UsbKbDxe.inf
-  MdeModulePkg/Bus/Usb/UsbMouseDxe/UsbMouseDxe.inf
-  MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
 !endif
 
 !if $(BOOT_SHELL_ONLY) == FALSE
@@ -894,91 +330,4 @@
     <PcdsPatchableInModule>
       gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80300087
   }
-!endif
-
-  #
-  # Console
-  #
-  MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
-  MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf {
-    <LibraryClasses>
-      PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-  }
-  MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
-  MdeModulePkg/Universal/HiiDatabaseDxe/HiiDatabaseDxe.inf
-  MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf {
-    <LibraryClasses>
-      CustomizedDisplayLib|MdeModulePkg/Library/CustomizedDisplayLib/CustomizedDisplayLib.inf
-  }
-!if $(BOOT_SHELL_ONLY) == FALSE
-  QuarkPlatformPkg/Override/MdeModulePkg/Universal/KeyboardLayout/KeyboardLayoutDxe.inf
-!endif
-  MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
-  MdeModulePkg/Universal/Disk/UnicodeCollation/EnglishDxe/EnglishDxe.inf
-
-  #
-  # File System Modules
-  #
-!if $(BOOT_SHELL_ONLY) == FALSE
-  MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
-  MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe.inf
-  FatPkg/EnhancedFatDxe/Fat.inf
-!endif
-!if $(PERFORMANCE_ENABLE) || $(BOOT_SHELL_ONLY)
-  MdeModulePkg/Universal/FvSimpleFileSystemDxe/FvSimpleFileSystemDxe.inf
-!endif
-
-!if $(BOOT_SHELL_ONLY) == FALSE
-  #
-  # Capsule update
-  #
-  IntelFrameworkModulePkg/Universal/FirmwareVolume/FwVolDxe/FwVolDxe.inf
-  IntelFrameworkModulePkg/Universal/FirmwareVolume/UpdateDriverDxe/UpdateDriverDxe.inf
-!endif
-
-  #
-  # Trusted Platform Module
-  #
-!if $(MEASURED_BOOT_ENABLE)
-  SecurityPkg/Tcg/MemoryOverwriteControl/TcgMor.inf
-  SecurityPkg/Tcg/TcgDxe/TcgDxe.inf
-  SecurityPkg/Tcg/TcgSmm/TcgSmm.inf
-!endif
-
-  #
-  # Performance Application
-  #
-!if $(PERFORMANCE_ENABLE)
-  PerformancePkg/Dp_App/Dp.inf {
-    <LibraryClasses>
-      ShellLib|ShellPkg/Library/UefiShellLib/UefiShellLib.inf
-      FileHandleLib|MdePkg/Library/UefiFileHandleLib/UefiFileHandleLib.inf
-  }
-!endif
-
-  ShellPkg/Application/Shell/Shell.inf {
-    <LibraryClasses>
-      ShellCommandLib|ShellPkg/Library/UefiShellCommandLib/UefiShellCommandLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel2CommandsLib/UefiShellLevel2CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel1CommandsLib/UefiShellLevel1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel3CommandsLib/UefiShellLevel3CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellDriver1CommandsLib/UefiShellDriver1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellDebug1CommandsLib/UefiShellDebug1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellInstall1CommandsLib/UefiShellInstall1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellNetwork1CommandsLib/UefiShellNetwork1CommandsLib.inf
-      HandleParsingLib|ShellPkg/Library/UefiHandleParsingLib/UefiHandleParsingLib.inf
-      ShellLib|ShellPkg/Library/UefiShellLib/UefiShellLib.inf
-      FileHandleLib|MdePkg/Library/UefiFileHandleLib/UefiFileHandleLib.inf
-      PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
-      BcfgCommandLib|ShellPkg/Library/UefiShellBcfgCommandLib/UefiShellBcfgCommandLib.inf
-
-    <PcdsFixedAtBuild>
-      gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0xFF
-      gEfiShellPkgTokenSpaceGuid.PcdShellLibAutoInitialize|FALSE
-      gEfiMdePkgTokenSpaceGuid.PcdUefiLibMaxPrintBufferSize|8000
-  }
-
-[BuildOptions.common.EDKII.DXE_RUNTIME_DRIVER]
-!if $(BOOT_SHELL_ONLY) == FALSE
-  MSFT:*_*_*_DLINK_FLAGS = /ALIGN:4096
 !endif

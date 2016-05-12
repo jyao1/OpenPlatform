@@ -1,0 +1,45 @@
+## @file
+# FDF file of Clanton Peak CRB platform with 32-bit DXE
+#
+# This package provides QuarkNcSocId platform specific modules.
+# Copyright (c) 2013 - 2016 Intel Corporation.
+#
+# This program and the accompanying materials
+# are licensed and made available under the terms and conditions of the BSD License
+# which accompanies this distribution.  The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php
+#
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+##
+#  SEC Phase modules
+##
+INF  UefiCpuPkg/SecCore/SecCore.inf
+
+INF  MdeModulePkg/Core/Pei/PeiMain.inf
+
+INF  RuleOverride = NORELOC  MdeModulePkg/Universal/PCD/Pei/Pcd.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
+INF  RuleOverride = NORELOC  MdeModulePkg/Universal/ReportStatusCodeRouter/Pei/ReportStatusCodeRouterPei.inf
+INF  RuleOverride = NORELOC  MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf
+!endif
+INF  RuleOverride = NORELOC  MdeModulePkg/Universal/FaultTolerantWritePei/FaultTolerantWritePei.inf
+INF  RuleOverride = NORELOC  MdeModulePkg/Universal/Variable/Pei/VariablePei.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
+INF  RuleOverride = NORELOC  UefiCpuPkg/CpuMpPei/CpuMpPei.inf
+INF  RuleOverride = NORELOC  MdeModulePkg/Universal/CapsulePei/CapsulePei.inf
+!endif
+
+INF  MdeModulePkg/Universal/PcatSingleSegmentPciCfg2Pei/PcatSingleSegmentPciCfg2Pei.inf
+INF  MdeModulePkg/Core/DxeIplPeim/DxeIpl.inf
+!if $(BOOT_SHELL_ONLY) == FALSE
+INF  UefiCpuPkg/PiSmmCommunication/PiSmmCommunicationPei.inf
+INF  UefiCpuPkg/Universal/Acpi/S3Resume2Pei/S3Resume2Pei.inf
+!endif
+!if $(MEASURED_BOOT_ENABLE)
+INF  SecurityPkg/Tcg/TrEEConfig/TrEEConfigPei.inf
+INF  SecurityPkg/Tcg/TcgPei/TcgPei.inf
+!endif

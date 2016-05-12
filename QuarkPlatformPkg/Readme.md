@@ -63,9 +63,7 @@ feature is used.
 Next, the ```edksetup.bat``` file is run to complete the initialization of an
 EDK II build environment.  Two example build commands are shown.  The first one
 in ```QuarkPlatformPlg/Quark.dsc``` builds a full UEFI firmware image that is
-able to boot the built-in UEFI Shell and Linux from a micro SD FLASH card.  The
-second one in ```QuarkPlatformPkg/QuarkMin.dsc``` builds a minimal firmware
-image that is useful for initial power-on and debug of new features.
+able to boot the built-in UEFI Shell and Linux from a micro SD FLASH card.
 
 ```cmd
 git clone https://github.com/tianocore/edk2.git
@@ -81,8 +79,12 @@ cd edk2
 edksetup.bat
 
 build -a IA32 -t VS2015x86 -p QuarkPlatformPkg/Quark.dsc
-build -a IA32 -t VS2015x86 -p QuarkPlatformPkg/QuarkMin.dsc
 ```
+
+If user use ```build -a IA32 -t VS2015x86 -p QuarkPlatformPkg/Quark.dsc
+-D BOOT_SHELL_ONLY=TRUE```, a minimal firmware image is build, which 
+is useful for initial power-on and debug of new features.
+
 
 ## **Linux Build Instructions**
 
@@ -109,9 +111,7 @@ Next, the EDK II BaseTools required to build firmware images are built.
 Next, the ```edksetup.bat``` file is run to complete the initialization of an
 EDK II build environment.  Two example build commands are shown.  The first one
 in ```QuarkPlatformPlg/Quark.dsc``` builds a full UEFI firmware image that is
-able to boot the built-in UEFI Shell and Linux from a micro SD FLASH card.  The
-second one in ```QuarkPlatformPkg/QuarkMin.dsc``` builds a minimal firmware
-image that is useful for initial power-on and debug of new features.
+able to boot the built-in UEFI Shell and Linux from a micro SD FLASH card.
 
 ```sh
 git clone https://github.com/tianocore/edk2.git
@@ -129,8 +129,11 @@ cd $WORKSPACE/edk2
 . edksetup.sh BaseTools
 
 build -a IA32 -t GCC49 -p QuarkPlatformPkg/Quark.dsc
-build -a IA32 -t GCC49 -p QuarkPlatformPkg/QuarkMin.dsc
 ```
+
+If user use ```build -a IA32 -t GCC49 -p QuarkPlatformPkg/Quark.dsc
+-D BOOT_SHELL_ONLY=TRUE```, a minimal firmware image is build, which 
+is useful for initial power-on and debug of new features.
 
 ## **Build Features**
 
@@ -140,6 +143,7 @@ features on the build command line using ```-D``` flags.
 | **Define Name**            | **Default Value** | **Supported Values** |
 | -------------------------- | ----------------- | -------------------- |
 | ```GALILEO```              |              GEN2 | GEN1, GEN2           |
+| ```BOOT_SHELL_ONLY```      |             FALSE | TRUE, FALSE          |
 | ```LOGGING```              |              TRUE | TRUE, FALSE          |
 | ```SOURCE_DEBUG_ENABLE```  |             FALSE | TRUE, FALSE          |
 | ```PERFORMANCE_ENABLE```   |             FALSE | TRUE, FALSE          |
@@ -154,6 +158,12 @@ features on the build command line using ```-D``` flags.
   http://www.intel.com/content/www/us/en/embedded/products/galileo/galileo-g1-datasheet.html).
   Add ```-D GALILEO=GEN1``` to the build command for [Intel(R) Galileo Development Board](
   http://www.intel.com/content/www/us/en/embedded/products/galileo/galileo-g1-datasheet.html).
+
+* ```BOOT_SHELL_ONLY``` - Used to control if this is full UEFI firmware image.
+  The default is FALSE, which means this is full UEFI firmware image that is
+  able to boot the built-in UEFI Shell and Linux from a micro SD FLASH card.
+  Add ```-D BOOT_SHELL_ONLY=TRUE``` to the build command line to build a minimal
+  firmware image that is useful for initial power-on and debug of new features.
 
 * ```LOGGING``` - Used to enable/disable logging messages from DEBUG() macros to
   a serial UART.  The default is TRUE for enabled when the BUILDTARGET is DEBUG

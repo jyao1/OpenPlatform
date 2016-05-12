@@ -13,10 +13,16 @@
 #
 ##
 
-#
-# The basic configuration
-#
-DEFINE BOOT_SHELL_ONLY   = FALSE
+  #
+  # Galileo board.  Options are [GEN1, GEN2]
+  #
+  DEFINE GALILEO              = GEN2
+
+
+  #
+  # The basic configuration
+  #
+  DEFINE BOOT_SHELL_ONLY   = FALSE
 
 
   #
@@ -27,10 +33,6 @@ DEFINE BOOT_SHELL_ONLY   = FALSE
   DEFINE SOURCE_DEBUG_ENABLE  = FALSE
   DEFINE PERFORMANCE_ENABLE   = FALSE
   DEFINE LOGGING              = FALSE
-  #
-  # Galileo board.  Options are [GEN1, GEN2]
-  #
-  DEFINE GALILEO              = GEN2
 
   #
   # TPM 1.2 Hardware.  Options are [NONE, LPC, ATMEL_I2C, INFINEON_I2C]
